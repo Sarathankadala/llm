@@ -2,11 +2,6 @@
   "name": "ai-legal-document-simplifier",
   "version": "1.0.0",
   "description": "AI-powered tool to convert complex legal text into plain English for educational purposes",
-  "main": "index.html",
-  "scripts": {
-    "dev": "serve .",
-    "build": "echo 'No build step required for static site'"
-  },
   "keywords": [
     "legal",
     "document",

@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AI Legal Document Simplifier - Convert complex legal text into plain English for educational purposes">
+    <meta name="description"
+        content="AI Legal Document Simplifier - Convert complex legal text into plain English for educational purposes">
     <title>AI Legal Document Simplifier</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="enhanced-styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
+
 <body>
     <div class="container">
         <!-- Header -->
@@ -26,22 +31,66 @@
                 </div>
                 <p class="tagline">Convert complex legal text into plain English</p>
             </div>
+            <button class="settings-btn" id="settingsBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M12 1v6m0 6v6"></path>
+                </svg>
+                AI Settings
+            </button>
         </header>
 
         <!-- Main Content -->
         <main class="main-content">
+            <!-- PDF Upload Section -->
+            <section class="upload-section card">
+                <div class="section-header">
+                    <h2>Upload PDF Document</h2>
+                    <span class="badge">New</span>
+                </div>
+                <div class="upload-zone" id="uploadZone">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p class="upload-text">Drag & drop PDF file here or click to browse</p>
+                    <p class="upload-subtext">Supports PDF documents up to 10MB</p>
+                    <input type="file" id="pdfInput" accept=".pdf" hidden>
+                </div>
+                <div class="file-info" id="fileInfo" style="display: none;">
+                    <div class="file-details">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                        <div>
+                            <p class="file-name" id="fileName"></p>
+                            <p class="file-meta" id="fileMeta"></p>
+                        </div>
+                    </div>
+                    <button class="btn-secondary btn-small" id="removeFileBtn">Remove</button>
+                </div>
+            </section>
+
             <!-- Input Section -->
             <section class="input-section card">
                 <div class="section-header">
                     <h2>Legal Document Input</h2>
-                    <button class="btn-secondary" id="loadSampleBtn">Load Sample</button>
+                    <div class="header-actions">
+                        <span class="mode-indicator" id="modeIndicator">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 16v-4m0-4h.01"></path>
+                            </svg>
+                            Basic Mode
+                        </span>
+                        <button class="btn-secondary btn-small" id="loadSampleBtn">Load Sample</button>
+                    </div>
                 </div>
-                <textarea 
-                    id="legalInput" 
-                    class="legal-input" 
+                <textarea id="legalInput" class="legal-input"
                     placeholder="Paste your legal document text here (e.g., contract clause, terms of service, policy statement)..."
-                    rows="10"
-                ></textarea>
+                    rows="10"></textarea>
                 <div class="input-actions">
                     <button class="btn-primary" id="simplifyBtn">
                         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -55,32 +104,35 @@
 
             <!-- Output Section -->
             <section class="output-section" id="outputSection" style="display: none;">
-                <!-- Original Text -->
-                <div class="card output-card">
-                    <div class="card-header">
-                        <h3>Original Text</h3>
-                        <button class="copy-btn" data-target="originalText">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                            </svg>
-                        </button>
+                <!-- Side-by-Side Comparison -->
+                <div class="comparison-section">
+                    <!-- Original Text -->
+                    <div class="card output-card">
+                        <div class="card-header">
+                            <h3>Original Text</h3>
+                            <button class="copy-btn" data-target="originalText">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="card-content" id="originalText"></div>
                     </div>
-                    <div class="card-content" id="originalText"></div>
-                </div>
 
-                <!-- Simplified Explanation -->
-                <div class="card output-card highlight-card">
-                    <div class="card-header">
-                        <h3>Simplified Explanation</h3>
-                        <button class="copy-btn" data-target="simplifiedText">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                            </svg>
-                        </button>
+                    <!-- Simplified Explanation -->
+                    <div class="card output-card highlight-card">
+                        <div class="card-header">
+                            <h3>Simplified Explanation</h3>
+                            <button class="copy-btn" data-target="simplifiedText">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="card-content simplified-content" id="simplifiedText"></div>
                     </div>
-                    <div class="card-content simplified-content" id="simplifiedText"></div>
                 </div>
 
                 <!-- Key Points -->
@@ -125,7 +177,8 @@
                         <line x1="12" y1="8" x2="12" y2="12"></line>
                         <line x1="12" y1="16" x2="12.01" y2="16"></line>
                     </svg>
-                    <p><strong>Disclaimer:</strong> This simplified explanation is for educational purposes only and does not constitute legal advice.</p>
+                    <p><strong>Disclaimer:</strong> This simplified explanation is for educational purposes only and
+                        does not constitute legal advice.</p>
                 </div>
             </section>
         </main>
@@ -141,9 +194,95 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
-        <span>Copied to clipboard!</span>
+        <span id="toastMessage">Copied to clipboard!</span>
     </div>
 
+    <!-- AI Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>AI Settings</h2>
+                <button class="modal-close" id="closeModal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-section">
+                    <h3>AI Provider</h3>
+                    <p class="help-text">Choose an AI service for enhanced document analysis</p>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="aiProvider" value="none" checked>
+                            <div class="radio-content">
+                                <strong>None (Basic Mode)</strong>
+                                <span>Rule-based simplification - Free, works offline</span>
+                            </div>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="aiProvider" value="openai">
+                            <div class="radio-content">
+                                <strong>OpenAI (GPT-4/3.5)</strong>
+                                <span>Most accurate - Requires API key (~$0.002-0.03/page)</span>
+                            </div>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="aiProvider" value="gemini">
+                            <div class="radio-content">
+                                <strong>Google Gemini</strong>
+                                <span>Free tier available - Requires API key</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-section" id="apiKeySection" style="display: none;">
+                    <h3>API Configuration</h3>
+                    <div class="privacy-notice">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        <p>Your API key is stored only in your browser session and never sent to our servers.</p>
+                    </div>
+                    <label class="input-label">
+                        API Key
+                        <input type="password" id="apiKeyInput" class="api-key-input" placeholder="Enter your API key">
+                    </label>
+                    <div class="model-select" id="modelSelectContainer">
+                        <label class="input-label">
+                            Model
+                            <select id="modelSelect" class="model-selector">
+                                <option value="gpt-3.5-turbo">GPT-3.5 Turbo (Faster, Cheaper)</option>
+                                <option value="gpt-4">GPT-4 (More Accurate)</option>
+                            </select>
+                        </label>
+                    </div>
+                    <a href="#" id="apiKeyHelp" class="help-link" target="_blank">How to get an API key?</a>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Processing Options</h3>
+                    <label class="checkbox-option">
+                        <input type="checkbox" id="detailedAnalysis" checked>
+                        <span>Enable detailed analysis (uses more tokens)</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" id="extractDefinitions" checked>
+                        <span>Extract legal definitions</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelSettings">Cancel</button>
+                <button class="btn-primary" id="saveSettings">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="ai-service.js"></script>
     <script src="app.js"></script>
 </body>
+
 </html>

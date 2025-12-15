@@ -3,24 +3,24 @@
     --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    
+
     --primary-color: #667eea;
     --primary-dark: #5568d3;
     --secondary-color: #764ba2;
     --accent-color: #4facfe;
-    
+
     --bg-primary: #0f0f23;
     --bg-secondary: #1a1a2e;
     --bg-card: rgba(255, 255, 255, 0.05);
     --bg-card-hover: rgba(255, 255, 255, 0.08);
-    
+
     --text-primary: #ffffff;
     --text-secondary: #b8b8d1;
     --text-muted: #8888a8;
-    
+
     --border-color: rgba(255, 255, 255, 0.1);
     --border-focus: rgba(102, 126, 234, 0.5);
-    
+
     /* Risk Level Colors */
     --risk-low: #10b981;
     --risk-low-bg: rgba(16, 185, 129, 0.1);
@@ -28,7 +28,7 @@
     --risk-medium-bg: rgba(245, 158, 11, 0.1);
     --risk-high: #ef4444;
     --risk-high-bg: rgba(239, 68, 68, 0.1);
-    
+
     /* Spacing */
     --spacing-xs: 0.5rem;
     --spacing-sm: 0.75rem;
@@ -36,7 +36,7 @@
     --spacing-lg: 1.5rem;
     --spacing-xl: 2rem;
     --spacing-2xl: 3rem;
-    
+
     /* Typography */
     --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-size-sm: 0.875rem;
@@ -45,19 +45,19 @@
     --font-size-xl: 1.25rem;
     --font-size-2xl: 1.5rem;
     --font-size-3xl: 2rem;
-    
+
     /* Shadows */
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
     --shadow-glow: 0 0 32px rgba(102, 126, 234, 0.3);
-    
+
     /* Border Radius */
     --radius-sm: 0.5rem;
     --radius-md: 0.75rem;
     --radius-lg: 1rem;
     --radius-xl: 1.5rem;
-    
+
     /* Transitions */
     --transition-fast: 150ms ease;
     --transition-base: 250ms ease;
@@ -89,15 +89,22 @@ body::before {
     width: 200%;
     height: 200%;
     background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
     animation: backgroundShift 20s ease-in-out infinite;
     pointer-events: none;
     z-index: -1;
 }
 
 @keyframes backgroundShift {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(-5%, -5%); }
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(-5%, -5%);
+    }
 }
 
 /* Container */
@@ -229,7 +236,8 @@ body::before {
 }
 
 /* Buttons */
-.btn-primary, .btn-secondary {
+.btn-primary,
+.btn-secondary {
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-sm);
@@ -307,6 +315,32 @@ body::before {
 /* Output Section */
 .output-section {
     animation: fadeInUp 0.6s ease;
+}
+
+/* Comparison Section - Side by Side Layout */
+.comparison-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.comparison-section .output-card {
+    margin-bottom: 0;
+    height: 100%;
+}
+
+.comparison-section .output-card {
+    margin-bottom: 0;
+    height: 100%;
+}
+
+/* Comparison Section - Side by Side Layout */
+.comparison-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
 }
 
 .card-content {
@@ -477,6 +511,7 @@ body::before {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -488,6 +523,7 @@ body::before {
         opacity: 0;
         transform: translateY(-30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -499,43 +535,48 @@ body::before {
     .container {
         padding: var(--spacing-md);
     }
-    
+
     .header {
         padding: var(--spacing-xl) 0;
     }
-    
+
     .header h1 {
         font-size: var(--font-size-2xl);
     }
-    
+
     .logo-section {
         flex-direction: column;
         gap: var(--spacing-sm);
     }
-    
+
     .section-header {
         flex-direction: column;
         align-items: flex-start;
         gap: var(--spacing-md);
     }
-    
+
     .input-actions {
         flex-direction: column;
     }
-    
-    .btn-primary, .btn-secondary {
+
+    .btn-primary,
+    .btn-secondary {
         width: 100%;
         justify-content: center;
     }
-    
+
     .card {
         padding: var(--spacing-lg);
     }
-    
+
     .toast {
         right: var(--spacing-md);
         left: var(--spacing-md);
         bottom: var(--spacing-md);
+    }
+
+    .comparison-section {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -556,5 +597,9 @@ body::before {
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
+
+/* === NEW FEATURES: PDF Upload & AI Integration === */

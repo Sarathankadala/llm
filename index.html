@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Legal Document Simplifier - Convert complex legal text into plain English for educational purposes">
+    <title>AI Legal Document Simplifier</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="12" y1="18" x2="12" y2="12"></line>
+                        <line x1="9" y1="15" x2="15" y2="15"></line>
+                    </svg>
+                    <h1>AI Legal Document Simplifier</h1>
+                </div>
+                <p class="tagline">Convert complex legal text into plain English</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <section class="input-section card">
+                <div class="section-header">
+                    <h2>Legal Document Input</h2>
+                    <button class="btn-secondary" id="loadSampleBtn">Load Sample</button>
+                </div>
+                <textarea 
+                    id="legalInput" 
+                    class="legal-input" 
+                    placeholder="Paste your legal document text here (e.g., contract clause, terms of service, policy statement)..."
+                    rows="10"
+                ></textarea>
+                <div class="input-actions">
+                    <button class="btn-primary" id="simplifyBtn">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                        </svg>
+                        Simplify Document
+                    </button>
+                    <button class="btn-secondary" id="clearBtn">Clear</button>
+                </div>
+            </section>
+
+            <!-- Output Section -->
+            <section class="output-section" id="outputSection" style="display: none;">
+                <!-- Original Text -->
+                <div class="card output-card">
+                    <div class="card-header">
+                        <h3>Original Text</h3>
+                        <button class="copy-btn" data-target="originalText">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="card-content" id="originalText"></div>
+                </div>
+
+                <!-- Simplified Explanation -->
+                <div class="card output-card highlight-card">
+                    <div class="card-header">
+                        <h3>Simplified Explanation</h3>
+                        <button class="copy-btn" data-target="simplifiedText">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="card-content simplified-content" id="simplifiedText"></div>
+                </div>
+
+                <!-- Key Points -->
+                <div class="card output-card">
+                    <div class="card-header">
+                        <h3>Key Points</h3>
+                        <button class="copy-btn" data-target="keyPoints">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="card-content">
+                        <ul class="key-points-list" id="keyPoints"></ul>
+                    </div>
+                </div>
+
+                <!-- Risk/Obligation Indicator -->
+                <div class="card output-card">
+                    <div class="card-header">
+                        <h3>Risk / Obligation Indicator</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="risk-indicator">
+                            <div class="risk-level-badge" id="riskBadge">
+                                <span class="risk-label">Level:</span>
+                                <span class="risk-value" id="riskLevel">-</span>
+                            </div>
+                            <div class="risk-reason">
+                                <strong>Reason:</strong>
+                                <p id="riskReason">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Disclaimer -->
+                <div class="disclaimer-card">
+                    <svg class="disclaimer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <p><strong>Disclaimer:</strong> This simplified explanation is for educational purposes only and does not constitute legal advice.</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 AI Legal Document Simplifier | Educational Tool Only</p>
+        </footer>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>Copied to clipboard!</span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
